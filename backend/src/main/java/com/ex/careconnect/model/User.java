@@ -18,6 +18,9 @@ public class User {
     @Column(name = "user_password", nullable = true, length = 100)
     private String userPassword;
     @Basic
+    @Column(name = "email", nullable = true, length = 100)
+    private String email;
+    @Basic
     @Column(name = "user_data_id", nullable = true)
     private Integer userDataId;
     @Basic
@@ -107,6 +110,10 @@ public class User {
     public void setIsDelivery(Integer isDelivery) {
         this.isDelivery = isDelivery;
     }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
 
     @Override
     public boolean equals(Object o) {

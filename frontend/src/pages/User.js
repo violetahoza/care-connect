@@ -205,6 +205,17 @@ const User = () => {
               />
             </li>
             <li>
+              <label for="email">Email:</label>
+              <input
+                type="text"
+                id="email"
+                placeholder={currentUser.email}
+                value={currentUser.email}
+                
+                required
+              />
+            </li>
+            <li>
               <label for="country">Country:</label>
               <input
                 type="text"

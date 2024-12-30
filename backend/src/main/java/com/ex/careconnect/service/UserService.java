@@ -1,16 +1,63 @@
 package com.ex.careconnect.service;
 
+import com.ex.careconnect.model.PasswordResetToken;
 import com.ex.careconnect.model.User;
 import com.ex.careconnect.repository.UserRepository;
+import com.ex.careconnect.repository.PasswordResetTokenRepository;
+import com.ex.careconnect.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordResetTokenRepository passwordResetTokenRepository;
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    public void createPasswordResetTokenForUser(User user, String token) {
+        PasswordResetToken myToken = new PasswordResetToken();
+        myToken.setToken(token);
+        myToken.setUser(user);
+        myToken.setExpiryDate(new Date(System.currentTimeMillis() + 3600000)); // 1 hour expiry
+        passwordResetTokenRepository.save(myToken);
+    }
+
+    public PasswordResetToken getPasswordResetToken(String token) {
+        return passwordResetTokenRepository.findByToken(token);
+    }
+
+    public void changeUserPassword(User user, String password) {
+        user.setUserPassword(password);
+        userRepository.save(user);
+    }
+
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public void sendPasswordResetEmail(String email, String token) {
+        String subject = "Password Reset Request";
+        String resetUrl = "http://localhost:3000/resetPassword?token=" + token;
+        String message = "To reset your password, click the link below:\n" + resetUrl;
+
+        SimpleMailMessage emailMessage = new SimpleMailMessage();
+        emailMessage.setTo(email);
+        emailMessage.setSubject(subject);
+        emailMessage.setText(message);
+
+        mailSender.send(emailMessage);
+    }
 
     public List<User> getUsers() {
         return userRepository.findAll();

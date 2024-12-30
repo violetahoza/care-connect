@@ -116,6 +116,10 @@ const Register = () => {
               <input type="text" id="last-name" required />
             </li>
             <li>
+              <label for="email">Email:</label>
+              <input type="text" id="email" required />
+            </li>
+            <li>
               <label for="country">Country:</label>
               <input type="text" id="country" required />
             </li>

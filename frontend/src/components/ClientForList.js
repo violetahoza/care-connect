@@ -10,6 +10,7 @@ const ClientForList = (props) => {
     currentUser.id = props.clientId;
     currentUser.firstName = props.clientFirstName;
     currentUser.lastName = props.clientLastName;
+    currentUser.email = props.clientEmail;
     currentUser.addressCountry = props.clientAddressCountry;
     currentUser.addressCity = props.clientAddressCity;
     currentUser.addressStreet = props.clientAddressStreet;
@@ -37,6 +38,15 @@ const ClientForList = (props) => {
                 type="text"
                 id="client-name"
                 value={`${props.clientFirstName}  ${props.clientLastName}`}
+                required
+              />
+            </li>
+            <li>
+              <label for="client-email">Client Email:</label>
+              <input
+                type="text"
+                id="client-email"
+                value={props.clientEmail}
                 required
               />
             </li>

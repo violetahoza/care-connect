@@ -95,7 +95,7 @@ const Login = () => {
   return (
     <section id="entry-page">
       <form>
-        <h2>Welcome Back to Beautify!</h2>
+        <h2>Welcome Back to Care Connect!</h2>
         {/* <h2>Beautify</h2> */}
         <fieldset>
           {/* <legend>Log In</legend> */}
