@@ -97,7 +97,7 @@ const Register = () => {
       <form>
         <h2>Sign Up!</h2>
         <fieldset>
-          <legend>Create Account</legend>
+          {/* <legend>Create Account</legend> */}
           <ul>
             <li>
               <label for="username">Username:</label>

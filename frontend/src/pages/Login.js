@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { userStoreData } from "../utils/Store";
 import { userPersonalData } from "../utils/Store";
 import { userAddressData } from "../utils/Store";
+import { FaUser, FaLock } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -94,18 +95,20 @@ const Login = () => {
   return (
     <section id="entry-page">
       <form>
-        <h2>Welcome Back!</h2>
-        <h2>Beautify</h2>
+        <h2>Welcome Back to Beautify!</h2>
+        {/* <h2>Beautify</h2> */}
         <fieldset>
-          <legend>Log In</legend>
+          {/* <legend>Log In</legend> */}
           <ul>
             <li>
-              <label for="username">Username:</label>
-              <input type="text" id="username" required />
+              <label for="username" > Username:</label>
+              <input type="text" id="username" placeholder="username" required />
+              {/* <FaUser className="icon" /> */}
             </li>
             <li>
               <label for="password">Password:</label>
-              <input type="password" id="password" required />
+              <input type="password" id="password"  placeholder="password" required />
+              {/* <FaLock className="icon" /> */}
             </li>
             <li>
               <i />
