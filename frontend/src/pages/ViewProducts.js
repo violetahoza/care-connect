@@ -27,7 +27,7 @@ const ViewProductsProvider = () => {
       <button type="button" onClick={handleBack}>
         Back
       </button>
-      <h2>Products:</h2>
+      <h2>Products</h2>
       {storedProducts.map((product) => (
         <ProductForList
           productId={product.id}

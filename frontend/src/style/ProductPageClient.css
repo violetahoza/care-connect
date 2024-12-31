@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Jura:400');
 * {
+	font-family: Jura, Arial;
+	font-weight: 400;
 	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 *::before, *::after {
 	box-sizing: border-box;
 }
 body {
-	font-family: Jura, Arial;
-	font-weight: 400;
-	line-height: 1.5;
 	margin: 0;
 	padding: 0;
-	background: #fff;
-	text-rendering: optimizeLegibility;
+	box-sizing: border-box;
 	background-color: rgb(220, 157, 199);
 }
 ul {
@@ -34,10 +34,8 @@ a:hover {
 a.active {
 	color: #333;
 }
-h1, h2, h3, h4 {
-	color: #333;
-	font-weight: normal;
-	margin: 1.75rem 0 1rem 0;
+h1, h2, h3, h4, h5, h6, p {
+	margin: 0;
 }
 h1 {
 	font-size: 2.5rem;
@@ -349,4 +347,130 @@ input {
 	padding: 5px;
 	border: 1px solid #ddd;
 	border-radius: 5px;
+}
+
+section#product-page-client {
+	display: grid;
+	grid-template-columns: 1fr minmax(200px, 600px) 1fr;
+	grid-template-rows: minmax(auto, 1fr) 1fr 1fr;
+	grid-gap: 20px;
+	width: 100%;
+	height: 150vh;
+	background: url('../../images/image.png') no-repeat;
+	background-size: cover;
+	background-position: center;
+	padding: 60px 20px;
+}
+section#product-page-client form {
+	grid-column: 2;
+	grid-row: 1;
+	display: grid;
+	grid-gap: 20px;
+	margin: 40px 0;
+	padding: 30px;
+	background: transparent;
+	border-radius: 15px;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+	backdrop-filter: blur(5px);
+	transition: transform 0.3s ease-in-out;
+}
+section#product-page-client form:hover {
+	transform: scale(1.05);
+	box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+section#product-page-client form h2 {
+	margin-bottom: 15px;
+	text-align: center;
+	font-size: 2.5rem;
+	font-weight: 700;
+	color: #282974;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+	letter-spacing: 0.5px;
+}
+section#product-page-client form fieldset {
+	margin: 0;
+	padding: 25px;
+	border: none;
+	border-radius: 10px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	background: transparent;
+}
+section#product-page-client form fieldset ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+section#product-page-client form fieldset ul li {
+	display: grid;
+	align-items: center;
+	margin: 20px 0;
+	margin: 10px;
+}
+section#product-page-client form fieldset ul li a {
+	color: #02c;
+	text-decoration: none;
+	transition: color 0.3s ease;
+	font-weight: 700;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+section#product-page-client form fieldset ul li a:hover {
+	color: #4b5cf2;
+}
+section#product-page-client form fieldset ul li label {
+	text-align: left;
+	padding-bottom: 5px;
+	color: #282974;
+	font-size: 1.1rem;
+	font-weight: 700;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+section#product-page-client form fieldset ul li input {
+	padding: 12px 15px;
+	border: 2px solid rgba(255, 255, 255, 0.3);
+	border-radius: 8px;
+	font-size: 1rem;
+	transition: all 0.3s ease;
+	background: rgba(255, 255, 255, 0.2);
+	color: #282974;
+}
+section#product-page-client form fieldset ul li input:hover {
+	border: 1px solid #aaf;
+	border-color: rgba(255, 255, 255, 0.5);
+}
+section#product-page-client form fieldset ul li input:focus {
+	outline: none;
+	border-color: rgba(255, 255, 255, 0.8);
+	background: rgba(255, 255, 255, 0.3);
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+section#product-page-client form fieldset ul li input::placeholder {
+	color: rgba(4, 0, 57, 0.709);
+}
+section#product-page-client form fieldset ul li input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.2);
+}
+section#product-page-client form button {
+	padding: 15px 25px;
+	border: 2px solid rgba(0, 0, 0, 0);
+	border-radius: 8px;
+	background: rgba(255, 255, 255, 0.2);
+	color: #282974;
+	font-size: 1.2rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+section#product-page-client form button:hover {
+	background: rgba(255, 255, 255, 0.3);
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+section#product-page-client form button:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
 }

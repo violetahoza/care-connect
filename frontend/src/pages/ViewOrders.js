@@ -28,7 +28,7 @@ const ViewOrders = () => {
       <button type="button" onClick={handleBack}>
         Back
       </button>
-      <h2>Orders:</h2>
+      <h2>Orders</h2>
       {orders.map((order) => (
         <OrderForList
           orderId={order.id}

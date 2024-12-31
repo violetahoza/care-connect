@@ -28,6 +28,7 @@ const Register = () => {
     const newUser = {
       userName: document.getElementById("username").value,
       userPassword: document.getElementById("password-field").value,
+      email: document.getElementById("email").value,
       userDataId: 0,
       isAdmin: 0,
       isCustomer: 1,
@@ -77,6 +78,7 @@ const Register = () => {
       userStoreData.id = createdUser.data.id;
       userStoreData.userName = createdUser.data.userName;
       userStoreData.userPassword = createdUser.data.userPassword;
+      userStoreData.email = createdUser.data.email;
       userStoreData.userDataId = createdUser.data.userDataId;
       userStoreData.isAdmin = 0;
       userStoreData.isCustomer = 1;
@@ -100,39 +102,39 @@ const Register = () => {
           {/* <legend>Create Account</legend> */}
           <ul>
             <li>
-              <label for="username">Username:</label>
+              <label htmlFor="username">Username:</label>
               <input type="text" id="username" required />
             </li>
             <li>
-              <label for="password-field">Password:</label>
+              <label htmlFor="password-field">Password:</label>
               <input type="password" id="password-field" required />
             </li>
             <li>
-              <label for="first-name">First Name:</label>
+              <label htmlFor="first-name">First Name:</label>
               <input type="text" id="first-name" required />
             </li>
             <li>
-              <label for="last-name">Last Name:</label>
+              <label htmlFor="last-name">Last Name:</label>
               <input type="text" id="last-name" required />
             </li>
             <li>
-              <label for="email">Email:</label>
-              <input type="text" id="email" required />
+              <label htmlFor="email">Email:</label>
+              <input type="email" id="email" required />
             </li>
             <li>
-              <label for="country">Country:</label>
+              <label htmlFor="country">Country:</label>
               <input type="text" id="country" required />
             </li>
             <li>
-              <label for="city">City:</label>
+              <label htmlFor="city">City:</label>
               <input type="text" id="city" required />
             </li>
             <li>
-              <label for="street">Street name:</label>
+              <label htmlFor="street">Street name:</label>
               <input type="text" id="street" required />
             </li>
             <li>
-              <label for="street-number">Street number:</label>
+              <label htmlFor="street-number">Street number:</label>
               <input type="text" id="street-number" required />
             </li>
           </ul>

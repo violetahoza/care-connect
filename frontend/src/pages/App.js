@@ -36,7 +36,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/questionnaire" element={<Questionnaire />} />
-        <Route path="/pw-reset" element={<PWReset />} />
+        <Route path="/password-reset" element={<PWReset />} />
         <Route path="/personal-data" element={<PersonalData />} />
         <Route path="/landing-page-admin" element={<LandingPageAdmin />} />
         <Route path="/landing-page-delivery" element={<LandingPageDelivery />} />
@@ -59,6 +59,10 @@ function App() {
         <Route path="/shopping-cart" element={<ShoppingCart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/checkout-card" element={<CheckoutCard />} />
+        <Route path="/client/:id" element={<Client />} />
+        <Route path="/user/:id" element={<User />} />
+        <Route path="/order/:id" element={<Order />} />
+        <Route path="/product/:id" element={<Product />} />
       </Routes>
     </Router>
   );

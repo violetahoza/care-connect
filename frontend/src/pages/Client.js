@@ -12,9 +12,6 @@ const Client = () => {
 
   return (
     <section id="product">
-      <button type="button" onClick={handleBack}>
-        Back
-      </button>
       <form>
         <fieldset>
           <ul>
@@ -83,6 +80,9 @@ const Client = () => {
             </li>
           </ul>
         </fieldset>
+        <button type="button" onClick={handleBack}>
+          ← Back to Clients
+        </button>
       </form>
     </section>
   );

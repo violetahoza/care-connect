@@ -5,23 +5,30 @@ import { useNavigate } from "react-router-dom";
 import { currentOrder } from "../utils/Store";
 
 const Order = () => {
-  const [isPayedOnline, setIsPayedOnline] = React.useState(false);
-  const [isPayedCash, setIsPayedCash] = React.useState(false);
-  const [isDelivered, setIsDelivered] = React.useState(false);
-  const [deliveryCompanyId, setDeliveryCompanyId] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isPayedOnline, setIsPayedOnline] = React.useState(currentOrder.isPayedOnline);
+  const [isPayedCash, setIsPayedCash] = React.useState(currentOrder.isPayedCash);
+  const [isDelivered, setIsDelivered] = React.useState(currentOrder.isDelivered);
+  const [deliveryCompanyId, setDeliveryCompanyId] = React.useState(currentOrder.deliveryCompanyId);
 
   const navigate = useNavigate();
 
   const handleFinishEditing = async () => {
-    const res = await axios.put("http://localhost:8080/updateShopOrder", {
-      id: currentOrder.id,
-      isPayedOnline: isPayedOnline ? 1 : 0,
-      isPayedCash: isPayedCash ? 1 : 0,
-      isDelivered: isDelivered ? 1 : 0,
-      deliveryCompanyId: deliveryCompanyId,
-    });
-
-    navigate("/view-orders");
+    setIsLoading(true);
+    try {
+      await axios.put("http://localhost:8080/updateShopOrder", {
+        id: currentOrder.id,
+        isPayedOnline: isPayedOnline ? 1 : 0,
+        isPayedCash: isPayedCash ? 1 : 0,
+        isDelivered: isDelivered ? 1 : 0,
+        deliveryCompanyId: deliveryCompanyId,
+      });
+      navigate("/view-orders");
+    } catch (error) {
+      console.error("Error updating order:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleBack = () => {
@@ -30,9 +37,6 @@ const Order = () => {
 
   return (
     <section id="order">
-      <button type="button" onClick={handleBack}>
-        Back
-      </button>
       <form>
         <fieldset>
           <ul>
@@ -161,7 +165,10 @@ const Order = () => {
           </ul>
         </fieldset>
         <button type="button" onClick={handleFinishEditing}>
-          Finish editing
+          {isLoading ? "Saving..." : "Save Changes"}
+        </button>
+        <button type="button" onClick={handleBack}>
+          ← Back to Orders
         </button>
       </form>
     </section>

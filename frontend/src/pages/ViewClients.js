@@ -28,7 +28,7 @@ const ViewOrders = () => {
       <button type="button" onClick={handleBack}>
         Back
       </button>
-      <h2>Clients:</h2>
+      <h2>Clients</h2>
       {clients.map((client) => (
         <ClientForList
           clientId={client.id}

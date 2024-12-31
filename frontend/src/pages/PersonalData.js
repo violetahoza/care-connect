@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "../style/EntryPage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -7,14 +7,15 @@ import { userPersonalData } from "../utils/Store";
 import { userAddressData } from "../utils/Store";
 
 const PersonalData = () => {
-  const [userName, setUsername] = React.useState(null);
-  const [userPassword, setUserPassword] = React.useState(null);
-  const [firstName, setFirstName] = React.useState(null);
-  const [lastName, setLastName] = React.useState(null);
-  const [addressCountry, setAddressCountry] = React.useState(null);
-  const [addressCity, setAddressCity] = React.useState(null);
-  const [addressStreet, setAddressStreet] = React.useState(null);
-  const [addressNumber, setAddressNumber] = React.useState(null);
+  const [userName, setUsername] = useState(userStoreData.userName);
+  const [userPassword, setUserPassword] = useState(userStoreData.userPassword);
+  const [userEmail, setEmail] = useState(userStoreData.email);
+  const [firstName, setFirstName] = useState(userPersonalData.firstName);
+  const [lastName, setLastName] = useState(userPersonalData.lastName);
+  const [addressCountry, setAddressCountry] = useState(userAddressData.addressCountry);
+  const [addressCity, setAddressCity] = useState(userAddressData.addressCity);
+  const [addressStreet, setAddressStreet] = useState(userAddressData.addressStreet);
+  const [addressNumber, setAddressNumber] = useState(userAddressData.addressNumber);
 
   const navigate = useNavigate();
 
@@ -23,11 +24,13 @@ const PersonalData = () => {
       id: userStoreData.id,
       userName: userName,
       userPassword: userPassword,
+      email: userEmail,
       userDataId: userStoreData.userDataId,
     });
 
     userStoreData.userName = updatedUser.data.userName;
     userStoreData.userPassword = updatedUser.data.userPassword;
+    userStoreData.userEmail = updatedUser.data.email;
 
     const updatedUserData = await axios.put(
       "http://localhost:8080/updateUserData",
@@ -75,6 +78,19 @@ const PersonalData = () => {
     }
   };
 
+  useEffect(() => {
+    setUsername(userStoreData.userName);
+    setUserPassword(userStoreData.userPassword);
+    setEmail(userStoreData.email);
+    setFirstName(userPersonalData.firstName);
+    setLastName(userPersonalData.lastName);
+    setAddressCountry(userAddressData.addressCountry);
+    setAddressCity(userAddressData.addressCity);
+    setAddressStreet(userAddressData.addressStreet);
+    setAddressNumber(userAddressData.addressNumber);
+  }, []);
+
+
   return (
     <section id="entry-page">
       <form>
@@ -101,6 +117,17 @@ const PersonalData = () => {
                 placeholder={userStoreData.userPassword}
                 value={userPassword}
                 onChange={(e) => setUserPassword(e.target.value)}
+                required
+              />
+            </li>
+            <li>
+              <label for="email">Email:</label>
+              <input
+                type="text"
+                id="email"
+                placeholder={userStoreData.email}
+                value={userEmail}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </li>

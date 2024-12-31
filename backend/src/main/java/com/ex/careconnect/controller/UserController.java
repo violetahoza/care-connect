@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -38,4 +39,8 @@ public class UserController {
         return userService.deleteUserById(id);
     }
 
+    @GetMapping("/users/findByEmail")
+    public Optional<User> getUserByEmail(@RequestParam String email) {
+        return Optional.ofNullable(userService.findUserByEmail(email));
+    }
 }

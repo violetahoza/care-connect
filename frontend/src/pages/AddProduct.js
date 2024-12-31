@@ -73,7 +73,7 @@ const AddProduct = () => {
           Save
         </button>
         <button type="button" onClick={handleBack}>
-          Back
+         Back
         </button>
       </form>
     </section>

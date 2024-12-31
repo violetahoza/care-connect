@@ -28,7 +28,7 @@ const ViewUsers = () => {
       <button type="button" onClick={handleBack}>
         Back
       </button>
-      <h2>Users:</h2>
+      <h2>Users</h2>
       {users.map((user) => (
         <UserForList
           userId={user.id}

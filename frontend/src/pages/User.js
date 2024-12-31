@@ -6,91 +6,103 @@ import axios from "axios";
 
 const User = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const [userName, setUsername] = React.useState(null);
-  const [userPassword, setUserPassword] = React.useState(null);
-  const [firstName, setFirstName] = React.useState(null);
-  const [lastName, setLastName] = React.useState(null);
-  const [addressCountry, setAddressCountry] = React.useState(null);
-  const [addressCity, setAddressCity] = React.useState(null);
-  const [addressStreet, setAddressStreet] = React.useState(null);
-  const [addressNumber, setAddressNumber] = React.useState(null);
-  const [userId, setUserId] = React.useState(null);
-  const [isAdmin, setIsAdmin] = React.useState(null);
-  const [isCustomer, setIsCustomer] = React.useState(null);
-  const [isEmployee, setIsEmployee] = React.useState(null);
-  const [isDelivery, setIsDelivery] = React.useState(null);
-  const [isProvider, setIsProvider] = React.useState(null);
+  const [userName, setUsername] = React.useState(currentUser.userName);
+  const [userPassword, setUserPassword] = React.useState(currentUser.userPassword);
+  const [firstName, setFirstName] = React.useState(currentUser.firstName);
+  const [lastName, setLastName] = React.useState(currentUser.lastName);
+  const [addressCountry, setAddressCountry] = React.useState(currentUser.addressCountry);
+  const [addressCity, setAddressCity] = React.useState(currentUser.addressCity);
+  const [addressStreet, setAddressStreet] = React.useState(currentUser.addressStreet);
+  const [addressNumber, setAddressNumber] = React.useState(currentUser.addressNumber);
+  const [userId, setUserId] = React.useState(currentUser.id);
+  const [isAdmin, setIsAdmin] = React.useState(currentUser.isAdmin);
+  const [isCustomer, setIsCustomer] = React.useState(currentUser.isCustomer);
+  const [isEmployee, setIsEmployee] = React.useState(currentUser.isEmployee);
+  const [isDelivery, setIsDelivery] = React.useState(currentUser.isDelivery);
+  const [isProvider, setIsProvider] = React.useState(currentUser.isProvider);
 
   const handleBack = () => {
     navigate("/view-users");
   };
 
   const handleFinishEditing = async () => {
-    const updatedUser = await axios.put("http://localhost:8080/updateUser", {
-      id: currentUser.id,
-      userName: userName,
-      userPassword: userPassword,
-      userDataId: currentUser.userDataId,
-      isAdmin: isAdmin,
-      isCustomer: isCustomer,
-      isEmployee: isEmployee,
-      isDelivery: isDelivery,
-      isProvider: isProvider,
-    });
-
-    currentUser.userName = updatedUser.data.userName;
-    currentUser.userPassword = updatedUser.data.userPassword;
-    currentUser.isAdmin = updatedUser.data.isAdmin;
-    currentUser.isCustomer = updatedUser.data.isCustomer;
-    currentUser.isEmployee = updatedUser.data.isEmployee;
-    currentUser.isDelivery = updatedUser.data.isDelivery;
-    currentUser.isProvider = updatedUser.data.isProvider;
-
-    const updatedUserData = await axios.put(
-      "http://localhost:8080/updateUserData",
-      {
+    setIsLoading(true);
+    try {
+      const updatedUser = await axios.put("http://localhost:8080/updateUser", {
         id: currentUser.id,
-        firstName: firstName,
-        lastName: lastName,
-        addressId: currentUser.addressId,
-      }
-    );
+        userName: userName,
+        userPassword: userPassword,
+        userDataId: currentUser.userDataId,
+        isAdmin: isAdmin,
+        isCustomer: isCustomer,
+        isEmployee: isEmployee,
+        isDelivery: isDelivery,
+        isProvider: isProvider,
+      });
 
-    currentUser.firstName = updatedUserData.data.firstName;
-    currentUser.lastName = updatedUserData.data.lastName;
+      currentUser.userName = updatedUser.data.userName;
+      currentUser.userPassword = updatedUser.data.userPassword;
+      currentUser.isAdmin = updatedUser.data.isAdmin;
+      currentUser.isCustomer = updatedUser.data.isCustomer;
+      currentUser.isEmployee = updatedUser.data.isEmployee;
+      currentUser.isDelivery = updatedUser.data.isDelivery;
+      currentUser.isProvider = updatedUser.data.isProvider;
 
-    const updatedAddress = await axios.put(
-      "http://localhost:8080/updateAddress",
-      {
-        id: currentUser.id,
-        addressCountry: addressCountry,
-        addressCity: addressCity,
-        addressStreet: addressStreet,
-        addressNumber: addressNumber,
-      }
-    );
+      const updatedUserData = await axios.put(
+        "http://localhost:8080/updateUserData",
+        {
+          id: currentUser.id,
+          firstName: firstName,
+          lastName: lastName,
+          addressId: currentUser.addressId,
+        }
+      );
 
-    currentUser.addressCountry = updatedAddress.data.addressCountry;
-    currentUser.addressCity = updatedAddress.data.addressCity;
-    currentUser.addressStreet = updatedAddress.data.addressStreet;
-    currentUser.addressNumber = updatedAddress.data.addressNumber;
-    navigate("/view-users");
+      currentUser.firstName = updatedUserData.data.firstName;
+      currentUser.lastName = updatedUserData.data.lastName;
+
+      const updatedAddress = await axios.put(
+        "http://localhost:8080/updateAddress",
+        {
+          id: currentUser.id,
+          addressCountry: addressCountry,
+          addressCity: addressCity,
+          addressStreet: addressStreet,
+          addressNumber: addressNumber,
+        }
+      );
+
+      currentUser.addressCountry = updatedAddress.data.addressCountry;
+      currentUser.addressCity = updatedAddress.data.addressCity;
+      currentUser.addressStreet = updatedAddress.data.addressStreet;
+      currentUser.addressNumber = updatedAddress.data.addressNumber;
+      navigate("/view-users");
+    } catch (error) {
+      console.error("Error updating user:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleDeleteUser = () => {
-    const res = axios.delete(
-      `http://localhost:8080/deleteUser/${currentUser.id}`,
-      {}
-    );
-    navigate("/view-users");
+  const handleDeleteUser = async () => {
+    if (!window.confirm("Are you sure you want to delete this product? This action cannot be undone.")) {
+      return;
+    }
+    setIsLoading(true);
+    try {
+      await axios.delete(`http://localhost:8080/deleteUser/${currentUser.id}`);
+      navigate("/view-users");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <section id="product">
-      <button type="button" onClick={handleBack}>
-        Back
-      </button>
       <form>
         <fieldset>
           <ul>
@@ -262,10 +274,13 @@ const User = () => {
           </ul>
         </fieldset>
         <button type="button" onClick={handleFinishEditing}>
-          Finish editing
+          {isLoading ? "Saving..." : "Save Changes"}
         </button>
         <button type="button" onClick={handleDeleteUser}>
-          Delete user
+          {isLoading ? "Deleting..." : "Delete User"}
+        </button>
+        <button type="button" onClick={handleBack}>
+          ← Back to Users
         </button>
       </form>
     </section>

@@ -79,6 +79,9 @@ const SearchProducts = () => {
         <button type="button" onClick={handleSearch}>
           Search
         </button>
+        <button type="button" onClick={() => navigate("/landing-page-admin")}>
+          Back 
+        </button>
       </form>
     </section>
   );

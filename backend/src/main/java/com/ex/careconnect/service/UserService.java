@@ -4,7 +4,6 @@ import com.ex.careconnect.model.PasswordResetToken;
 import com.ex.careconnect.model.User;
 import com.ex.careconnect.repository.UserRepository;
 import com.ex.careconnect.repository.PasswordResetTokenRepository;
-import com.ex.careconnect.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -43,7 +42,7 @@ public class UserService {
     }
 
     public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).orElse(null);
     }
 
     public void sendPasswordResetEmail(String email, String token) {
@@ -75,6 +74,7 @@ public class UserService {
         User existingUser = userRepository.findById(user.getId()).orElse(null);
         if(user.getUserName() != null) existingUser.setUserName(user.getUserName());
         if(user.getUserPassword() != null) existingUser.setUserPassword(user.getUserPassword());
+        if(user.getEmail() != null) existingUser.setEmail(user.getEmail());
         if(user.getUserDataId() != null) existingUser.setUserDataId(user.getUserDataId());
         if(user.getIsAdmin() != null) existingUser.setIsAdmin(user.getIsAdmin());
         if(user.getIsEmployee() != null) existingUser.setIsEmployee(user.getIsEmployee());
