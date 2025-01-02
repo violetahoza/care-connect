@@ -263,6 +263,10 @@ const ViewProductsCustomer = () => {
     navigate("/cart");
   };
 
+  const handleLogout = () => {
+    navigate("/login");
+  };
+
   return (
     <section id="product-page-client">
       <nav class="flex-nav">
@@ -270,7 +274,7 @@ const ViewProductsCustomer = () => {
           <div class="grid menu">
             <div class="column-xs-8 column-md-6">
               <p id="highlight" href onClick={handleBeautify}>
-                Beautify
+                Care Connect
               </p>
             </div>
             <div class="column-xs-4 column-md-6">
@@ -309,6 +313,9 @@ const ViewProductsCustomer = () => {
                   <a href onClick={handleShoppingCart}>
                     Shopping Cart
                   </a>
+                </li>
+                <li class="nav-item">
+                  <a href onClick={handleLogout}>Log out</a>
                 </li>
               </ul>
             </div>

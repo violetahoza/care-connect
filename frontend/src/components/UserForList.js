@@ -17,6 +17,7 @@ const UserForList = (props) => {
     currentUser.isProvider = props.userIsProvider;
     currentUser.firstName = props.userFirstName;
     currentUser.lastName = props.userLastName;
+    currentUser.email = props.userEmail;
     currentUser.addressCountry = props.userAddressCountry;
     currentUser.addressCity = props.userAddressCity;
     currentUser.addressStreet = props.userAddressStreet;

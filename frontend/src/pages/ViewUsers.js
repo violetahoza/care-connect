@@ -41,6 +41,7 @@ const ViewUsers = () => {
           userIsProvider={user.isProvider}
           userFirstName={user.firstName}
           userLastName={user.lastName}
+          userEmail={user.email}
           userAddressCountry={user.addressCountry}
           userAddressCity={user.addressCity}
           userAddressStreet={user.addressStreet}

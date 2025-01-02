@@ -28,6 +28,7 @@ public class UserDataService {
         UserData existingUserData = userDataRepository.findById(userData.getId()).orElse(null);
         if(userData.getFirstName() != null) existingUserData.setFirstName(userData.getFirstName());
         if(userData.getLastName() != null) existingUserData.setLastName(userData.getLastName());
+        if(userData.getEmail() != null) existingUserData.setEmail(userData.getEmail());
         if(userData.getAddressId() != null) existingUserData.setAddressId(userData.getAddressId());
         return userDataRepository.save(existingUserData);
     }
@@ -35,5 +36,9 @@ public class UserDataService {
     public String deleteUserDataById(Integer id) {
         userDataRepository.deleteById(id);
         return "User data removed !! " + id;
+    }
+
+    public UserData findUserByEmail(String email) {
+        return userDataRepository.findByEmail(email).orElse(null);
     }
 }

@@ -10,6 +10,7 @@ const Order = () => {
   const [isPayedCash, setIsPayedCash] = React.useState(currentOrder.isPayedCash);
   const [isDelivered, setIsDelivered] = React.useState(currentOrder.isDelivered);
   const [deliveryCompanyId, setDeliveryCompanyId] = React.useState(currentOrder.deliveryCompanyId);
+  const [deliveryCompanyName, setDeliveryCompanyName] = React.useState(currentOrder.deliveryCompanyName);
 
   const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ const Order = () => {
         isPayedCash: isPayedCash ? 1 : 0,
         isDelivered: isDelivered ? 1 : 0,
         deliveryCompanyId: deliveryCompanyId,
+        deliveryCompanyName: deliveryCompanyName,
       });
       navigate("/view-orders");
     } catch (error) {
@@ -30,6 +32,14 @@ const Order = () => {
       setIsLoading(false);
     }
   };
+
+  React.useEffect(() => {
+    setIsPayedCash(currentOrder.isPayedCash);
+    setIsPayedOnline(currentOrder.isPayedOnline);
+    setIsDelivered(currentOrder.isDelivered);
+    setDeliveryCompanyId(currentOrder.deliveryCompanyId);
+    setDeliveryCompanyName(currentOrder.deliveryCompanyName);
+  }, []);
 
   const handleBack = () => {
     navigate("/view-orders");
@@ -168,7 +178,7 @@ const Order = () => {
           {isLoading ? "Saving..." : "Save Changes"}
         </button>
         <button type="button" onClick={handleBack}>
-          ← Back to Orders
+          Back to Orders
         </button>
       </form>
     </section>

@@ -43,6 +43,15 @@ const Client = () => {
               />
             </li>
             <li>
+              <label for="email">Email:</label>
+              <input
+                type="text"
+                id="email"
+                value={currentUser.email}
+                required
+              />
+            </li>
+            <li>
               <label for="country">Country:</label>
               <input
                 type="text"
@@ -81,7 +90,7 @@ const Client = () => {
           </ul>
         </fieldset>
         <button type="button" onClick={handleBack}>
-          ← Back to Clients
+          Back to Clients
         </button>
       </form>
     </section>

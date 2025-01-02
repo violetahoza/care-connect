@@ -9,9 +9,9 @@ import { userAddressData } from "../utils/Store";
 const PersonalData = () => {
   const [userName, setUsername] = useState(userStoreData.userName);
   const [userPassword, setUserPassword] = useState(userStoreData.userPassword);
-  const [userEmail, setEmail] = useState(userStoreData.email);
   const [firstName, setFirstName] = useState(userPersonalData.firstName);
   const [lastName, setLastName] = useState(userPersonalData.lastName);
+  const [email, setEmail] = useState(userPersonalData.email);
   const [addressCountry, setAddressCountry] = useState(userAddressData.addressCountry);
   const [addressCity, setAddressCity] = useState(userAddressData.addressCity);
   const [addressStreet, setAddressStreet] = useState(userAddressData.addressStreet);
@@ -24,13 +24,11 @@ const PersonalData = () => {
       id: userStoreData.id,
       userName: userName,
       userPassword: userPassword,
-      email: userEmail,
       userDataId: userStoreData.userDataId,
     });
 
     userStoreData.userName = updatedUser.data.userName;
     userStoreData.userPassword = updatedUser.data.userPassword;
-    userStoreData.userEmail = updatedUser.data.email;
 
     const updatedUserData = await axios.put(
       "http://localhost:8080/updateUserData",
@@ -38,12 +36,14 @@ const PersonalData = () => {
         id: userPersonalData.id,
         firstName: firstName,
         lastName: lastName,
+        email: email,
         addressId: userPersonalData.addressId,
       }
     );
 
     userPersonalData.firstName = updatedUserData.data.firstName;
     userPersonalData.lastName = updatedUserData.data.lastName;
+    userPersonalData.email = updatedUserData.data.email;
 
     const updatedAddress = await axios.put(
       "http://localhost:8080/updateAddress",
@@ -81,15 +81,14 @@ const PersonalData = () => {
   useEffect(() => {
     setUsername(userStoreData.userName);
     setUserPassword(userStoreData.userPassword);
-    setEmail(userStoreData.email);
     setFirstName(userPersonalData.firstName);
     setLastName(userPersonalData.lastName);
+    setEmail(userPersonalData.email);
     setAddressCountry(userAddressData.addressCountry);
     setAddressCity(userAddressData.addressCity);
     setAddressStreet(userAddressData.addressStreet);
     setAddressNumber(userAddressData.addressNumber);
   }, []);
-
 
   return (
     <section id="entry-page">
@@ -125,8 +124,8 @@ const PersonalData = () => {
               <input
                 type="text"
                 id="email"
-                placeholder={userStoreData.email}
-                value={userEmail}
+                placeholder={userPersonalData.email}
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />

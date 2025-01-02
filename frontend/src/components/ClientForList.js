@@ -10,7 +10,7 @@ const ClientForList = (props) => {
     currentUser.id = props.clientId;
     currentUser.firstName = props.clientFirstName;
     currentUser.lastName = props.clientLastName;
-    //currentUser.email = props.clientEmail;
+    currentUser.email = props.clientEmail;
     currentUser.addressCountry = props.clientAddressCountry;
     currentUser.addressCity = props.clientAddressCity;
     currentUser.addressStreet = props.clientAddressStreet;

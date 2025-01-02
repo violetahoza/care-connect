@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { userStoreData } from "../utils/Store";
 import { clients } from "../utils/Store";
 
-const ViewOrders = () => {
+const ViewClients = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -34,6 +34,7 @@ const ViewOrders = () => {
           clientId={client.id}
           clientFirstName={client.firstName}
           clientLastName={client.lastName}
+          clientEmail={client.email}
           clientAddressCountry={client.addressCountry}
           clientAddressCity={client.addressCity}
           clientAddressStreet={client.addressStreet}
@@ -44,4 +45,4 @@ const ViewOrders = () => {
   );
 };
 
-export default ViewOrders;
+export default ViewClients;

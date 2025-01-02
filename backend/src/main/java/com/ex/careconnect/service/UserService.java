@@ -2,6 +2,8 @@ package com.ex.careconnect.service;
 
 import com.ex.careconnect.model.PasswordResetToken;
 import com.ex.careconnect.model.User;
+import com.ex.careconnect.model.UserData;
+import com.ex.careconnect.repository.UserDataRepository;
 import com.ex.careconnect.repository.UserRepository;
 import com.ex.careconnect.repository.PasswordResetTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +43,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElse(null);
-    }
-
     public void sendPasswordResetEmail(String email, String token) {
         String subject = "Password Reset Request";
         String resetUrl = "http://localhost:3000/resetPassword?token=" + token;
@@ -74,7 +72,6 @@ public class UserService {
         User existingUser = userRepository.findById(user.getId()).orElse(null);
         if(user.getUserName() != null) existingUser.setUserName(user.getUserName());
         if(user.getUserPassword() != null) existingUser.setUserPassword(user.getUserPassword());
-        if(user.getEmail() != null) existingUser.setEmail(user.getEmail());
         if(user.getUserDataId() != null) existingUser.setUserDataId(user.getUserDataId());
         if(user.getIsAdmin() != null) existingUser.setIsAdmin(user.getIsAdmin());
         if(user.getIsEmployee() != null) existingUser.setIsEmployee(user.getIsEmployee());

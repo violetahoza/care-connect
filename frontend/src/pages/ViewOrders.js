@@ -39,6 +39,7 @@ const ViewOrders = () => {
           orderIsDelivered={order.isDelivered}
           orderFirstName={order.firstName}
           orderLastName={order.lastName}
+          orderEmail={order.email}
           orderAddressCountry={order.addressCountry}
           orderAddressCity={order.addressCity}
           orderAddressStreet={order.addressStreet}

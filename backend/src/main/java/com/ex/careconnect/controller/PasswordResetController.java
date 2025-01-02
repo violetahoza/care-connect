@@ -2,6 +2,8 @@ package com.ex.careconnect.controller;
 
 import com.ex.careconnect.model.PasswordResetToken;
 import com.ex.careconnect.model.User;
+import com.ex.careconnect.model.UserData;
+import com.ex.careconnect.service.UserDataService;
 import com.ex.careconnect.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +16,16 @@ import java.util.UUID;
 public class PasswordResetController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserDataService userDataService;
 
     @PostMapping("/requestPasswordReset")
     public String requestPasswordReset(@RequestParam String email) {
-        User user = userService.findUserByEmail(email);
-        if (user == null) {
+        UserData userData = userDataService.findUserByEmail(email);
+        if (userData == null) {
             return "User not found";
         }
+        User user = userService.findUserById(userData.getId());
         String token = UUID.randomUUID().toString();
         userService.createPasswordResetTokenForUser(user, token);
         userService.sendPasswordResetEmail(email, token);

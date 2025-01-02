@@ -71,10 +71,6 @@ const LandingPageCustomer = () => {
     navigate("/personal-data");
   };
 
-  const handleBeautify = () => {
-    navigate("/landing-page-customer");
-  };
-
   const handleLogout = () => {
     navigate("/login");
   };
@@ -329,14 +325,18 @@ const LandingPageCustomer = () => {
     navigate("/view-products-customer");
   };
 
+  const handleBeautify = () => {
+    navigate("/landing-page-customer");
+  };
+
   return (
     <section id="product-page-client">
-      <nav class="flex-nav">
+       <nav class="flex-nav">
         <div class="container">
           <div class="grid menu">
             <div class="column-xs-8 column-md-6">
               <p id="highlight" href onClick={handleBeautify}>
-                Beautify
+                Care Connect
               </p>
             </div>
             <div class="column-xs-4 column-md-6">
@@ -350,36 +350,24 @@ const LandingPageCustomer = () => {
                   </a>
                   <ul class="dropdown-menu">
                     <li class="nav-item">
-                      <a href onClick={handleSkincare}>
-                        Skincare
-                      </a>
+                      <a href onClick={handleSkincare}>Skincare</a>
                     </li>
                     <li class="nav-item">
-                      <a href onClick={handleBath}>
-                        Bath
-                      </a>
+                      <a href onClick={handleBath}>Bath</a>
                     </li>
                     <li class="nav-item">
-                      <a href onClick={handleHair}>
-                        Hair
-                      </a>
+                      <a href onClick={handleHair}>Hair</a>
                     </li>
                   </ul>
                 </li>
                 <li class="nav-item">
-                  <a href onClick={handlePersonalData}>
-                    Personal Data
-                  </a>
+                  <a href onClick={handlePersonalData}>Personal Data</a>
                 </li>
                 <li class="nav-item">
-                  <a href onClick={handleShoppingCart}>
-                    Shopping Cart
-                  </a>
+                  <a href onClick={handleShoppingCart}>Shopping Cart</a>
                 </li>
                 <li class="nav-item">
-                  <a href onClick={handleLogout}>
-                    Log out
-                  </a>
+                  <a href onClick={handleLogout}>Log out</a>
                 </li>
               </ul>
             </div>
@@ -388,80 +376,43 @@ const LandingPageCustomer = () => {
       </nav>
 
       <main>
-        <div>
-          <div>
-            <img
-              class="center"
-              src="https://d3rzzb9pdm93i0.cloudfront.net/2022/04/16510210282ccd8ce95b83f699a3b496c6104ea266.jpg"
-            />
+        <div class="hero-section">
+          {/* <img
+            class="hero-image"
+            src="https://d3rzzb9pdm93i0.cloudfront.net/2022/04/16510210282ccd8ce95b83f699a3b496c6104ea266.jpg"
+            alt="Beauty Products"
+          /> */}
+          <div class="hero-text">
+            <h1>Welcome to Care Connect</h1>
+            <p>Your personalized beauty experience starts here.</p>
           </div>
-          <div class="container1">
-            <h1 class="center">Welcome to our beauty products site!</h1>
-          </div>
-          <div class="container2">
-            <p class="center">
-              We are thrilled to offer you a customized shopping experience
-              based on your individual needs and preferences. By completing our
-              questionnaire when you registered, we were able to gather
-              important information about your beauty concerns, desired results,
-              and preferred product types. This allows us to recommend products
-              that are tailored specifically for you.
-            </p>
-            <p class="center">
-              We know that finding the right beauty products can be
-              overwhelming, which is why we have taken the guesswork out of it
-              for you. Our selection of products includes a wide range of
-              options, from skincare to makeup to haircare and beyond. We have
-              carefully curated our selection to ensure that you only see the
-              items that will truly benefit you and help you achieve your beauty
-              goals.
-            </p>
-            <p class="center">
-              Thank you for choosing our site. We hope that you enjoy your
-              personalized shopping experience and that you discover products
-              that you love. Don't hesitate to reach out to us if you have any
-              questions or need any assistance. We are here to help you on your
-              journey to feeling and looking your best.
-            </p>
-          </div>
-          <div class="container1">
-            <h1 class="center">Enjoy your journey!</h1>
-          </div>
-          <form>
-            <button class="button" onClick={handleViewProducts}>
-              View Products
-            </button>
+        </div>
 
-            <button class="button" onClick={handleSkincare}>
-              Skincare
-            </button>
-
-            <button class="button" onClick={handleBath}>
-              Bath
-            </button>
-
-            <button class="button" onClick={handleHair}>
-              Hair
-            </button>
-          </form>
-          <div class="container1">
-            <h1 class="center">Do you need a specific product?</h1>
+        <div class="content-section">
+          <div class="container">
+            <h2>Discover Our Products</h2>
+            <p>
+              We offer a wide range of beauty products tailored to your needs.
+            </p>
+            <div class="button-group">
+              <button class="btn-primary" onClick={handleViewProducts}>
+                  View Products
+                </button>
+                <button class="btn-secondary">
+                  Contact Us
+                </button>
+            </div>
           </div>
-          <form>
-            <label for="search">Keyword:</label>
-            <input type="text" id="search" required />
-            <button type="button" onClick={handleSearch}>
-              Search
-            </button>
-          </form>
         </div>
       </main>
+
       <footer>
         <div class="container">
-          <div class="row">
-            <p class="copyright text-muted small">
-              Copyright &copy; Violeta & Daria 2024. All Rights Reserved
-            </p>
+          <p>&copy; 2025 Care Connect. All rights reserved.</p>
+          <div class="social-media">
+            <a href="#" class="social-icon">Facebook</a>
+            <a href="#" class="social-icon">Twitter</a>
+            <a href="#" class="social-icon">Instagram</a>
           </div>
         </div>
       </footer>

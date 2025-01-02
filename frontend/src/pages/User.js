@@ -1,33 +1,75 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../style/Product.css";
-import { currentUser } from "../utils/Store";
+import { currentUser, users } from "../utils/Store";
 import axios from "axios";
 
 const User = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const [userName, setUsername] = React.useState(currentUser.userName);
-  const [userPassword, setUserPassword] = React.useState(currentUser.userPassword);
-  const [firstName, setFirstName] = React.useState(currentUser.firstName);
-  const [lastName, setLastName] = React.useState(currentUser.lastName);
-  const [addressCountry, setAddressCountry] = React.useState(currentUser.addressCountry);
-  const [addressCity, setAddressCity] = React.useState(currentUser.addressCity);
-  const [addressStreet, setAddressStreet] = React.useState(currentUser.addressStreet);
-  const [addressNumber, setAddressNumber] = React.useState(currentUser.addressNumber);
-  const [userId, setUserId] = React.useState(currentUser.id);
-  const [isAdmin, setIsAdmin] = React.useState(currentUser.isAdmin);
-  const [isCustomer, setIsCustomer] = React.useState(currentUser.isCustomer);
-  const [isEmployee, setIsEmployee] = React.useState(currentUser.isEmployee);
-  const [isDelivery, setIsDelivery] = React.useState(currentUser.isDelivery);
-  const [isProvider, setIsProvider] = React.useState(currentUser.isProvider);
+  const [userName, setUsername] = React.useState(null);
+  const [userPassword, setUserPassword] = React.useState(null);
+  const [firstName, setFirstName] = React.useState(null);
+  const [lastName, setLastName] = React.useState(null);
+  const [email, setEmail] = React.useState(null);
+  const [addressCountry, setAddressCountry] = React.useState(null);
+  const [addressCity, setAddressCity] = React.useState(null);
+  const [addressStreet, setAddressStreet] = React.useState(null);
+  const [addressNumber, setAddressNumber] = React.useState(null);
+  const [userId, setUserId] = React.useState(null);
+  const [isAdmin, setIsAdmin] = React.useState(null);
+  const [isCustomer, setIsCustomer] = React.useState(null);
+  const [isEmployee, setIsEmployee] = React.useState(null);
+  const [isDelivery, setIsDelivery] = React.useState(null);
+  const [isProvider, setIsProvider] = React.useState(null);
+
+  // const { id } = useParams(); // Assuming you pass user ID in URL
+  // const [userData, setUserData] = React.useState(null);
+
+  // React.useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       const response = await axios.get(`http://localhost:8080/users/${id}`);
+  //       const user = response.data;
+        
+  //       // Update currentUser in Store
+  //       Object.assign(currentUser, user);
+        
+  //       // Update local state
+  //       setUserData(user);
+        
+  //       // Set all form states
+  //       setUsername(user.userName);
+  //       setUserPassword(user.userPassword);
+  //       setFirstName(user.firstName);
+  //       setLastName(user.lastName);
+  //       setEmail(user.email);
+  //       setAddressCountry(user.addressCountry);
+  //       setAddressCity(user.addressCity);
+  //       setAddressStreet(user.addressStreet);
+  //       setAddressNumber(user.addressNumber);
+  //       setIsAdmin(user.isAdmin);
+  //       setIsCustomer(user.isCustomer);
+  //       setIsEmployee(user.isEmployee);
+  //       setIsDelivery(user.isDelivery);
+  //       setIsProvider(user.isProvider);
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   fetchUserData();
+  // }, [id]);
 
   const handleBack = () => {
     navigate("/view-users");
   };
 
-  const handleFinishEditing = async () => {
+  const handleFinishEditing = async (e) => {
     setIsLoading(true);
     try {
       const updatedUser = await axios.put("http://localhost:8080/updateUser", {
@@ -49,6 +91,7 @@ const User = () => {
       currentUser.isEmployee = updatedUser.data.isEmployee;
       currentUser.isDelivery = updatedUser.data.isDelivery;
       currentUser.isProvider = updatedUser.data.isProvider;
+      //Object.assign(currentUser, updatedUser.data);
 
       const updatedUserData = await axios.put(
         "http://localhost:8080/updateUserData",
@@ -56,12 +99,15 @@ const User = () => {
           id: currentUser.id,
           firstName: firstName,
           lastName: lastName,
+          email: email,
           addressId: currentUser.addressId,
         }
       );
 
       currentUser.firstName = updatedUserData.data.firstName;
       currentUser.lastName = updatedUserData.data.lastName;
+      currentUser.email = updatedUserData.data.email;
+      //Object.assign(currentUser, updatedUserData.data);
 
       const updatedAddress = await axios.put(
         "http://localhost:8080/updateAddress",
@@ -78,6 +124,13 @@ const User = () => {
       currentUser.addressCity = updatedAddress.data.addressCity;
       currentUser.addressStreet = updatedAddress.data.addressStreet;
       currentUser.addressNumber = updatedAddress.data.addressNumber;
+      //Object.assign(currentUser, updatedAddress.data);
+
+      // const userIndex = users.findIndex(user => user.id === currentUser.id);
+      // if (userIndex !== -1) {
+      //   users[userIndex] = { ...users[userIndex], ...currentUser };
+      // }
+
       navigate("/view-users");
     } catch (error) {
       console.error("Error updating user:", error);
@@ -86,6 +139,23 @@ const User = () => {
     }
   };
 
+  // React.useEffect(() => {
+  //     setUsername(currentUser.userName);
+  //     setUserPassword(currentUser.userPassword);
+  //     setIsAdmin(currentUser.isAdmin);
+  //     setIsCustomer(currentUser.isCustomer);
+  //     setIsEmployee(currentUser.isEmployee);
+  //     setIsDelivery(currentUser.isDelivery);
+  //     setIsProvider(currentUser.isProvider);
+  //     setFirstName(currentUser.firstName);
+  //     setLastName(currentUser.lastName);
+  //     setEmail(currentUser.email);
+  //     setAddressCountry(currentUser.addressCountry);
+  //     setAddressCity(currentUser.addressCity);
+  //     setAddressStreet(currentUser.addressStreet);
+  //     setAddressNumber(currentUser.addressNumber);
+  //   }, []);
+
   const handleDeleteUser = async () => {
     if (!window.confirm("Are you sure you want to delete this product? This action cannot be undone.")) {
       return;
@@ -93,6 +163,10 @@ const User = () => {
     setIsLoading(true);
     try {
       await axios.delete(`http://localhost:8080/deleteUser/${currentUser.id}`);
+      const userIndex = users.findIndex(user => user.id === currentUser.id);
+      if (userIndex !== -1) {
+        users.splice(userIndex, 1);
+      }
       navigate("/view-users");
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -222,8 +296,8 @@ const User = () => {
                 type="text"
                 id="email"
                 placeholder={currentUser.email}
-                value={currentUser.email}
-                
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </li>
@@ -280,7 +354,7 @@ const User = () => {
           {isLoading ? "Deleting..." : "Delete User"}
         </button>
         <button type="button" onClick={handleBack}>
-          ← Back to Users
+           Back to Users
         </button>
       </form>
     </section>

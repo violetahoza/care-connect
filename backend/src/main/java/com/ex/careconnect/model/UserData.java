@@ -19,6 +19,9 @@ public class UserData {
     @Column(name = "last_name", nullable = true, length = 100)
     private String lastName;
     @Basic
+    @Column(name = "email", nullable = true, length = 100)
+    private String email;
+    @Basic
     @Column(name = "address_id", nullable = true)
     private Integer addressId;
 
@@ -53,6 +56,10 @@ public class UserData {
     public void setAddressId(Integer addressId) {
         this.addressId = addressId;
     }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
 
     @Override
     public boolean equals(Object o) {

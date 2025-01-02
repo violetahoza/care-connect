@@ -1,6 +1,7 @@
 package com.ex.careconnect.controller;
 
 import com.ex.careconnect.model.User;
+import com.ex.careconnect.service.UserDataService;
 import com.ex.careconnect.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private UserService userService;
+    //@Autowired
+    private UserDataService userDataService;
 
     @GetMapping("/users")
     public List<User> getUsers() {
@@ -41,6 +44,6 @@ public class UserController {
 
     @GetMapping("/users/findByEmail")
     public Optional<User> getUserByEmail(@RequestParam String email) {
-        return Optional.ofNullable(userService.findUserByEmail(email));
+        return Optional.ofNullable(userService.findUserById(userDataService.findUserByEmail(email).getId()));
     }
 }

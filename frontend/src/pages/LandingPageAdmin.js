@@ -77,6 +77,7 @@ const LandingPageAdmin = () => {
       );
       clients[i].firstName = userData.data.firstName;
       clients[i].lastName = userData.data.lastName;
+      clients[i].email = userData.data.email;
       clients[i].addressId = userData.data.addressId;
       const address = await axios.get(
         `http://localhost:8080/findAddress/${userData.data.addressId}`,
@@ -100,38 +101,39 @@ const LandingPageAdmin = () => {
       orders.push(res.data[i]);
     }
 
-    let addressData = {};
     let personalData = {};
     let user = {};
 
     for (let i = 0; i < orders.length; i++) {
-      const orderId = orders[i].deliveryCompanyId;
-      const delivery = await axios.get(
-        `http://localhost:8080/findDeliveryCompany/${orderId}`,
-        {}
-      );
-      orders[i].deliveryCompanyName = delivery.data.deliveryCompanyName;
-
-      const id = orders[i].userId;
-      user = await axios.get(`http://localhost:8080/findUser/${id}`, {});
-
-      personalData = await axios.get(
-        `http://localhost:8080/findUserData/${user.data.userDataId}`,
-        {}
-      );
-
-      orders[i].firstName = personalData.data.firstName;
-      orders[i].lastName = personalData.data.lastName;
-
-      addressData = await axios.get(
-        `http://localhost:8080/findAddress/${personalData.data.addressId}`,
-        {}
-      );
-
-      orders[i].addressCountry = addressData.data.addressCountry;
-      orders[i].addressCity = addressData.data.addressCity;
-      orders[i].addressStreet = addressData.data.addressStreet;
-      orders[i].addressNumber = addressData.data.addressNumber;
+      try {
+        const orderId = orders[i].deliveryCompanyId;
+        const delivery = await axios.get(
+          `http://localhost:8080/findDeliveryCompany/${orderId}`
+        );
+        orders[i].deliveryCompanyName = delivery.data.deliveryCompanyName;
+    
+        const id = orders[i].userId;
+        user = await axios.get(`http://localhost:8080/findUser/${id}`);
+    
+        personalData = await axios.get(
+          `http://localhost:8080/findUserData/${user.data.userDataId}`
+        );
+    
+        orders[i].firstName = personalData.data.firstName;
+        orders[i].lastName = personalData.data.lastName;
+    
+        const addressData = await axios.get(
+          `http://localhost:8080/findAddress/${personalData.data.addressId}`
+        );
+    
+        orders[i].addressCountry = addressData.data.addressCountry;
+        orders[i].addressCity = addressData.data.addressCity;
+        orders[i].addressStreet = addressData.data.addressStreet;
+        orders[i].addressNumber = addressData.data.addressNumber;
+      } catch (error) {
+        console.error(`Error fetching data for order ${orders[i].id}:`, error);
+        // Handle the error appropriately, e.g., show a message to the user
+      }
     }
     navigate("/view-orders");
   };
@@ -152,6 +154,7 @@ const LandingPageAdmin = () => {
       );
       users[i].firstName = userData.data.firstName;
       users[i].lastName = userData.data.lastName;
+      users[i].email = userData.data.email;
       users[i].addressId = userData.data.addressId;
       const address = await axios.get(
         `http://localhost:8080/findAddress/${userData.data.addressId}`,

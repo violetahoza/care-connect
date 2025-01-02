@@ -44,6 +44,7 @@ const Login = () => {
       userPersonalData.id = personalData.data.id;
       userPersonalData.firstName = personalData.data.firstName;
       userPersonalData.lastName = personalData.data.lastName;
+      userPersonalData.email = personalData.data.email;
       userPersonalData.addressId = personalData.data.addressId;
 
       const addressData = await axios.get(

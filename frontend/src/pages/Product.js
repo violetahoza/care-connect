@@ -2,83 +2,70 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../style/Product.css";
-import { currentProduct } from "../utils/Store";
+import { currentProduct, storedProducts } from "../utils/Store";
 
 const Product = () => {
-  const [formData, setFormData] = useState({
-    productName: currentProduct.productName || "",
-    productDescription: currentProduct.productDescription || "",
-    productPrice: currentProduct.productPrice || "",
-    productAmount: currentProduct.productAmount || "",
-    productStock: currentProduct.productStock || "",
-    productCategory: currentProduct.productCategory || "",
-    providerName: currentProduct.providerName || ""
-  });
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
   const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
-    const { id, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [id.replace('product-', '')]: value
-    }));
-  };
+  const [productName, setProductName] = useState(currentProduct.productName);
+  const [productDescription, setProductDescription] = useState(currentProduct.productDescription);
+  const [productCategory, setProductCategory] = useState(currentProduct.productCategory);
+  const [productPrice, setProductPrice] = useState(currentProduct.productPrice);
+  const [productAmount, setProductAmount] = useState(currentProduct.productAmount);
+  const [productStock, setProductStock] = useState(currentProduct.productStock);
+  const [providerName, setProviderName] = useState(currentProduct.providerName);
 
-  const handleFinishEditing = async () => {
+  const handleEditProduct = async (e) => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      setError(null);
-      
-      const res = await axios.put("http://localhost:8080/updateProduct", {
+      const updatedProduct = await axios.put(`http://localhost:8080/updateProduct/${currentProduct.id}`, {
         id: currentProduct.id,
+        productName: productName,
+        productDescription: productDescription,
+        productCategory: productCategory,
+        productPrice: productPrice,
+        productAmount: productAmount,
+        productStock: productStock,
+        providerName: providerName,
       });
 
-      navigate("/view-products");
-    } catch (err) {
-      setError("Failed to update product. Please try again.");
+      currentProduct.productName = updatedProduct.data.productName;
+      currentProduct.productDescription = updatedProduct.data.productDescription;
+      currentProduct.productCategory = updatedProduct.data.productCategory;
+      currentProduct.productPrice = updatedProduct.data.productPrice;
+      currentProduct.productAmount = updatedProduct.data.productAmount;
+      currentProduct.productStock = updatedProduct.data.productStock;
+      currentProduct.providerName = updatedProduct.data.providerName;
+    } catch (error) {
+      console.error("Error updating product:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
+  React.useEffect(() => {
+    setProductName(currentProduct.productName);
+    setProductDescription(currentProduct.productDescription);
+    setProductCategory(currentProduct.productCategory);
+    setProductPrice(currentProduct.productPrice);
+    setProductAmount(currentProduct.productAmount);
+    setProductStock(currentProduct.productStock);
+    setProviderName(currentProduct.providerName);
+  }, []);
+
   const handleDeleteProduct = async () => {
-    if (!window.confirm("Are you sure you want to delete this product? This action cannot be undone.")) {
+    if(!window.confirm("Are you sure you want to delete this product?")) 
       return;
-    }
-
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      setError(null);
-
-      // Delete related product labels
-      const productLabels = await axios.get("http://localhost:8080/productLabels");
-      await Promise.all(
-        productLabels.data
-          .filter(label => label.productId === currentProduct.id)
-          .map(label => 
-            axios.delete(`http://localhost:8080/deleteProductLabel/${label.id}`)
-          )
-      );
-
-      // Delete related product orders
-      const productOrders = await axios.get("http://localhost:8080/productOrders");
-      await Promise.all(
-        productOrders.data
-          .filter(order => order.productId === currentProduct.id)
-          .map(order =>
-            axios.delete(`http://localhost:8080/deleteProductOrder/${order.id}`)
-          )
-      );
-
-      // Delete the product
       await axios.delete(`http://localhost:8080/deleteProduct/${currentProduct.id}`);
-      
+      const updatedProducts = storedProducts.filter(product => product.id !== currentProduct.id);
+      storedProducts.length = 0;
+      updatedProducts.forEach(product => storedProducts.push(product));
       navigate("/view-products");
-    } catch (err) {
-      setError("Failed to delete product. Please try again.");
+    } catch (error) {
+      console.error("Error deleting product:", error);
     } finally {
       setIsLoading(false);
     }
@@ -88,9 +75,8 @@ const Product = () => {
     <section id="product">
       <form>
         <h2>Edit Product</h2>
-        {error && <div className="error-message">{error}</div>}
         
-        <fieldset disabled={isLoading}>
+        <fieldset>
           <ul>
             <li>
               <label htmlFor="product-id">Product ID</label>
@@ -106,8 +92,8 @@ const Product = () => {
               <input
                 type="text"
                 id="product-name"
-                value={formData.productName}
-                onChange={handleInputChange}
+                value={currentProduct.productName}
+                onChange={(e) => setProductName(e.target.value)}
                 required
               />
             </li>
@@ -116,8 +102,8 @@ const Product = () => {
               <input
                 type="text"
                 id="product-description"
-                value={formData.productDescription}
-                onChange={handleInputChange}
+                value={currentProduct.productDescription}
+                onChange={(e) => setProductDescription(e.target.value)}
                 required
               />
             </li>
@@ -126,8 +112,8 @@ const Product = () => {
               <input
                 type="text"
                 id="product-category"
-                value={formData.productCategory}
-                onChange={handleInputChange}
+                value={ currentProduct.productCategory}
+                onChange={(e) => setProductCategory(e.target.value)}
                 required
               />
             </li>
@@ -136,8 +122,8 @@ const Product = () => {
               <input
                 type="number"
                 id="product-price"
-                value={formData.productPrice}
-                onChange={handleInputChange}
+                value={currentProduct.productPrice}
+                onChange={(e) => setProductPrice(e.target.value)}
                 required
                 min="0"
                 step="0.01"
@@ -148,8 +134,8 @@ const Product = () => {
               <input
                 type="number"
                 id="product-amount"
-                value={formData.productAmount}
-                onChange={handleInputChange}
+                value={currentProduct.productAmount}
+                onChange={(e) => setProductAmount(e.target.value)}
                 required
                 min="0"
               />
@@ -159,8 +145,8 @@ const Product = () => {
               <input
                 type="number"
                 id="product-stock"
-                value={formData.productStock}
-                onChange={handleInputChange}
+                value={currentProduct.productStock}
+                onChange={(e) => setProductStock(e.target.value)}
                 required
                 min="0"
               />
@@ -170,21 +156,21 @@ const Product = () => {
               <input
                 type="text"
                 id="product-provider"
-                value={formData.providerName}
-                onChange={handleInputChange}
+                value={currentProduct.providerName}
+                onChange={(e) => setProviderName(e.target.value)}
                 required
               />
             </li>
           </ul>
         </fieldset>
-        <button type="button" onClick={handleFinishEditing} disabled={isLoading}>
+        <button type="button" onClick={handleEditProduct}>
           {isLoading ? "Saving..." : "Save Changes"}
         </button>
-        <button type="button" onClick={handleDeleteProduct} disabled={isLoading}>
+        <button type="button" onClick={handleDeleteProduct}>
           {isLoading ? "Deleting..." : "Delete Product"}
         </button>
         <button type="button" onClick={() => navigate("/view-products")}>
-          ← Back to Products
+          Back to Products
         </button>
       </form>
     </section>

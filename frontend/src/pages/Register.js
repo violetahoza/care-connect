@@ -22,13 +22,13 @@ const Register = () => {
     const userData = {
       firstName: document.getElementById("first-name").value,
       lastName: document.getElementById("last-name").value,
+      email: document.getElementById("email").value,
       addressId: 0,
     };
 
     const newUser = {
       userName: document.getElementById("username").value,
       userPassword: document.getElementById("password-field").value,
-      email: document.getElementById("email").value,
       userDataId: 0,
       isAdmin: 0,
       isCustomer: 1,
@@ -69,6 +69,7 @@ const Register = () => {
       userPersonalData.id = data.data.id;
       userPersonalData.firstName = data.data.firstName;
       userPersonalData.lastName = data.data.lastName;
+      userPersonalData.email = data.data.email;
       userPersonalData.addressId = data.data.addressId;
 
       const createdUser = await axios.post(
@@ -78,7 +79,6 @@ const Register = () => {
       userStoreData.id = createdUser.data.id;
       userStoreData.userName = createdUser.data.userName;
       userStoreData.userPassword = createdUser.data.userPassword;
-      userStoreData.email = createdUser.data.email;
       userStoreData.userDataId = createdUser.data.userDataId;
       userStoreData.isAdmin = 0;
       userStoreData.isCustomer = 1;
